@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+	<grants />
+	<permissions>
+		<permission action="dispSocialxeTextyleTool" target="manager" />
+	</permissions>
+	<actions>
+		<action name="dispSocialxeAdminConfig" type="view" standalone="true" />
+		<action name="dispSocialxeAdminBitly" type="view" admin_index="true" standalone="true" />
+
+		<action name="procSocialxeAdminInsertConfig" type="controller" standalone="true" />
+		<action name="procSocialxeAdminInsertModuleConfig" type="controller" standalone="true" />
+		<action name="procSocialxeAdminDeleteChecked" type="controller" standalone="true" />
+
+		<action name="procCompileInput" type="controller" standalone="true" />
+		<action name="procCompileList" type="controller" standalone="true" />
+		<action name="procCompileSubList" type="controller" standalone="true" />
+		<action name="procSocialxeInsertComment" type="controller" standalone="true" />
+		<action name="procSocialxeDeleteComment" type="controller" standalone="true" />
+		<action name="procSocialxeChangeMaster" type="controller" standalone="true" />
+		<action name="procSocialxeSetAutoLoginKey" type="controller" standalone="true" />
+		<action name="procSocialxeLoginInsert" type="controller" standalone="true" />
+		<action name="procSocialxeUnlinkSocialInfo" type="controller" standalone="true" />
+		<action name="procSocialxeSetSend" type="controller" standalone="true" />
+		<action name="procSocialxeChangeMasterProvider" type="controller" standalone="true" />
+		<action name="procCompileInfo" type="controller" standalone="true" />
+		<action name="procResetSocialInfo" type="controller" standalone="true" />
+
+		<action name="dispSocialxeLogin" type="view" standalone="true" />
+		<action name="dispSocialxeCallback" type="view" standalone="true" />
+		<action name="dispSocialxeLogout" type="view" standalone="true" />
+		<action name="dispSocialxeTextyleTool" type="view" />
+		<action name="dispSocialxeLoginForm" type="view" standalone="true" />
+		<action name="dispSocialxeLoginAdditional" type="view" standalone="true" />
+		<action name="dispSocialxeSocialInfo" type="view" standalone="true" />
+	</actions>
+</module>

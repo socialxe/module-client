@@ -1,0 +1,19 @@
+<!--%import("filter/insert_socialxe_module_config.xml")-->
+
+<form action="./" method="post" onsubmit="return procFilter(this, insert_socialxe_module_config)">
+<input type="hidden" name="target_module_srl" value="{$config->module_srl?$config->module_srl:$module_srls}" />
+
+	<h4 class="xeAdmin">{$lang->socialxe}</h4>
+	<p class="summary">{$lang->about_part_social_info}</p>
+	<table cellspacing="0" class="rowTable">
+	<tr>
+		<th><div>{$lang->use_social_info}</div></th>
+		<td class="wide">
+			<input type="checkbox" name="use_social_info" value="Y" <!--@if($config->use_social_info == "Y")-->checked="checked"<!--@end--> />
+		</td>
+	</tr>
+	<tr class="row2">
+		<th class="button" colspan="2"><span class="button strong black"><input type="submit" value="{$lang->cmd_save}"/></span></th>
+	</tr>
+	</table>
+</form>
