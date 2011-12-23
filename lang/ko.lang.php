@@ -16,6 +16,8 @@
 	$lang->use_social_info = '소셜 정보 통합 사용';
 	$lang->about_use_social_info = '회원 정보에 소셜 정보를 통합하고 글, 댓글에 대해 자동으로 소셜 연동이 되도록 합니다.';
 	$lang->about_part_social_info = '이 모듈에서 쓰는 글, 댓글에 대해 소셜 통합 기능을 이용할 수 있도록 합니다.';
+	$lang->use_short_url = '짧은 주소 사용';
+	$lang->about_use_short_url = '소셜 사이트로 글의 링크를 전달할 때 짧게 줄여진 주소를 사용합니다.';
 	$lang->bitly_username = 'bit.ly Username';
 	$lang->bitly_api_key = 'bit.ly API Key';
 

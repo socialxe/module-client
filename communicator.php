@@ -167,22 +167,26 @@ class socialxeCommunicator{
 			}
 		}
 
-		// 생성된 짧은 주소가 있는지 확인한다.
 		$args->url = $this->_getCommentUrl($comment->content_link, $comment->parent->comment_srl);
-		$output = executeQuery('socialxe.getBitlyByUrl', $args);
-		$comment->short_link = $output->data->short_url;
+		if($config->use_short_url != 'N') {
+			// 생성된 짧은 주소가 있는지 확인한다.
+			$output = executeQuery('socialxe.getBitlyByUrl', $args);
+			$comment->short_link = $output->data->short_url;
 
-		// 생성된 짧은 주소가 없으며 생성
-		if ($this->config->bitly_username && $this->config->bitly_api_key && !$comment->short_link){
-			// bit.ly 라이브러리 로드
-			if (!class_exists("bitly_SocialXE")){
-				require_once(_XE_PATH_.'modules/socialxe/bitly.php');
+			// 생성된 짧은 주소가 없으며 생성
+			if ($this->config->bitly_username && $this->config->bitly_api_key && !$comment->short_link){
+				// bit.ly 라이브러리 로드
+				if (!class_exists("bitly_SocialXE")){
+					require_once(_XE_PATH_.'modules/socialxe/bitly.php');
+				}
+
+				// 링크 생성
+				$bitly = new bitly_SocialXE($this->config->bitly_username, $this->config->bitly_api_key);
+				$content_link = $bitly->shorten(urlencode($this->_getCommentUrl($comment->content_link, $comment->parent->comment_srl)));
+				if ($content_link) $comment->short_link = $content_link;
 			}
-
-			// 링크 생성
-			$bitly = new bitly_SocialXE($this->config->bitly_username, $this->config->bitly_api_key);
-			$content_link = $bitly->shorten(urlencode($this->_getCommentUrl($comment->content_link, $comment->parent->comment_srl)));
-			if ($content_link) $comment->short_link = $content_link;
+		} else {
+			$comment->short_link = $args->url;
 		}
 
 		// API 요청 준비
@@ -245,14 +249,16 @@ class socialxeCommunicator{
 			$result->add('msg', $msg);
 		}
 
-		// bit.ly 결과를 저장한다.
-		if ($bitly){
-			$bitly_result = $bitly->getRawResults();
-			$args->hash = $bitly_result['userHash'];
-			$args->title = $comment->content_title;
-			$args->short_url = $comment->short_link;
-			$args->url = $this->_getCommentUrl($comment->content_link, $comment->parent->comment_srl);
-			executeQuery('socialxe.insertBitly', $args);
+		if($config->use_short_url != 'N') {
+			// bit.ly 결과를 저장한다.
+			if ($bitly){
+				$bitly_result = $bitly->getRawResults();
+				$args->hash = $bitly_result['userHash'];
+				$args->title = $comment->content_title;
+				$args->short_url = $comment->short_link;
+				$args->url = $this->_getCommentUrl($comment->content_link, $comment->parent->comment_srl);
+				executeQuery('socialxe.insertBitly', $args);
+			}
 		}
 
 		// 대표 계정의 댓글 번호를 세팅한다.
@@ -363,7 +369,12 @@ class socialxeCommunicator{
 	function httpRequest($url, $mode = 'GET'){
 		if ($mode == 'POST'){
 			$url_info = parse_url($url);
-			$url = $url_info['scheme'] . '://' . $url_info['host'] . $url_info['path'];
+			$url = $url_info['scheme'] . '://' . $url_info['host'];
+			if (!$url_info['port'] || $url_info['port'] == '80'){
+				$url .= $url_info['path'];
+			}else{
+				$url .= ':'. $url_info['port'] . $url_info['path'];
+			}
 			$body = $url_info['query'];
 		}
 

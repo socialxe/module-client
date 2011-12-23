@@ -15,7 +15,8 @@
 			// 기본 정보를 받음
 			$args = Context::getRequestVars();
 
-			if ($args->use_ssl != "Y") $args->use_ssl = "N";
+			if($args->use_ssl != 'Y') $args->use_ssl = 'N';
+			if($args->use_short_url != 'Y') $args->use_short_url = 'N';
 
 			// 사용할 서비스 설정
 			$provider_list = $this->providerManager->getFullProviderList();

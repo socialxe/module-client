@@ -2,7 +2,7 @@
 
 <!--%import("filter/insert_config.xml")-->
 
-<form action="./" method="get" onsubmit="return procFilter(this, insert_config)">
+<form action="./" method="get" onsubmit="return procFilter(this, insert_config)"  no-error-return-url="true">
 <table cellspacing="0" class="rowTable">
 <tr>
 	<th scope="col" class="w200"><div>{$lang->server_hostname}</div></th>
@@ -36,6 +36,13 @@
 
 
 <table cellspacing="0" class="rowTable">
+<tr>
+	<th scope="col" class="w200"><div>{$lang->use_short_url}</div></th>
+	<td>
+		<input type="checkbox" name="use_short_url" value="Y" <!--@if(!$config->use_short_url || $config->use_short_url == 'Y')-->checked="checked"<!--@end-->/>
+		<p>{$lang->about_use_short_url}</p>
+	</td>
+</tr>
 <tr>
 	<th scope="col" class="w200"><div>{$lang->bitly_username}</div></th>
 	<td>

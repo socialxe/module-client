@@ -62,14 +62,17 @@ class socialxeProviderManager{
 
 	// 제공하는 서비스 목록(환경설정에서 선택한 것만)
 	function getProviderList(){
-		$provider_list = $this->getFullProviderList();
-		$result = array();
-		foreach($provider_list as $provider){
-			if ($this->config->select_service[$provider] == 'Y'){
-				$result[] = $provider;
+		static $result;
+		// 이미 호출 된 적 있다면, 저장된 값 반환
+		if(!is_array($result)) {
+			$provider_list = $this->getFullProviderList();
+			$result = array();
+			foreach($provider_list as $provider){
+				if ($this->config->select_service[$provider] == 'Y'){
+					$result[] = $provider;
+				}
 			}
 		}
-
 		return $result;
 	}
 

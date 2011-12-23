@@ -49,6 +49,18 @@
 				Context::set('url', $url);
 
 				// 로그인 안내 페이지 표시
+				// 모바일 모드가 아닐때도 모바일 페이지가 정상적으로 표시되도록.
+				if(class_exists('Mobile')) {
+					if(!Mobile::isFromMobilePhone()) {
+						Context::addHtmlHeader('<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes, target-densitydpi=medium-dpi" />');
+					}
+				}
+				// jQuery 압축 버전에 로드되는 1.5 이상에서는 min을 항상 로드(모바일 버전 때문)
+				if(defined('__XE__')) {
+					Context::addJsFile("./common/js/jquery.min.js", true, '', -100000);
+				} else {
+					Context::addJsFile("./common/js/jquery.js", true, '', -100000);
+				}
 				$this->setTemplatePath($template_path);
 				$this->setTemplateFile('login');
 				return;
@@ -324,6 +336,15 @@
 			$tpl_path = sprintf('%sskins/%s', $this->module_path, $config->skin);
 			if(!is_dir($tpl_path)) $tpl_path = sprintf('%sskins/%s', $this->module_path, 'default');
 			$this->setTemplatePath($tpl_path);
+
+			// JS 불러오기
+			 if(!defined("__XE__")) {
+				Context::addJsFile("./common/js/jquery.js", true, '', -100000);
+				Context::addJsFile("./common/js/js_app.js", true, '', -100000);
+				Context::addJsFile("./common/js/common.js", true, '', -100000);
+				Context::addJsFile("./common/js/xml_handler.js", true, '', -100000);
+				Context::addJsFile("./common/js/xml_js_filter.js", true, '', -100000);
+			}
 
 			// 템플릿 파일 지정
 			$this->setTemplateFile('social_login_additional');

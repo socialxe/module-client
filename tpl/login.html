@@ -1,18 +1,19 @@
-{@ Context::addJsFile("./common/js/jquery.js", true, '', -100000) }
-
 <!--//window.location.href='{$url}'; -->
 <!--%import("js/submit_login.js")-->
 
 <!--%import("css/style.css")-->
-
-<div id="login_info"><p>{$lang->msg_login} <img src="./images/spinner.gif" /></p><p><a href="{$url}">{$lang->msg_redirect}</a></p></div>
-
+<div id="wrapper" class="wide">
+	<h1 class="wide pcbg">{$lang->socialxe}</h1>
+	<div id="login_info" class="pcbg">
+		<p>{$lang->msg_login} <img alt="{$lang->msg_call_server}" src="./images/spinner.gif" /></p>
+		<p><a href="{$url}">{$lang->msg_redirect}</a></p>
+	</div>
+</div>
 <!--//
 	meta reflash, window.location 모두 리퍼러에 문제가 있다 ㅡㅡ
 	좋은 방법은 아니지만... 어차피 이 페이지는 JS를 사용할 때 사용되니까...
 -->
-
-<form id="move" action="./">
+<form id="move" action="./"  no-error-return-url="true">
 	<input type="hidden" name="act" value="{$act}" />
 	<input type="hidden" name="module" value="{$module}" />
 	<input type="hidden" name="provider" value="{$provider}" />

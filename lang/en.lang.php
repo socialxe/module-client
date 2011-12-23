@@ -17,6 +17,8 @@
 	$lang->use_social_info = 'Use social information integrating';
 	$lang->about_use_social_info = 'Integrate social network service to member\'s information, and his or her documents and comments would be automatically linked to SNS site.';
 	$lang->about_part_social_info = 'Allow this module\'s documents and comments to be linked to SNS site with social information integrating function.';
+	$lang->use_short_url = 'Short URL';
+	$lang->about_use_short_url = 'Send comments or documents with short url.';
 	$lang->bitly_username = 'bit.ly Username';
 	$lang->bitly_api_key = 'bit.ly API Key';
 

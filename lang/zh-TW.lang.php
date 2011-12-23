@@ -17,6 +17,8 @@
 	$lang->use_social_info = '社交資料';
 	$lang->about_use_social_info = '整合社交網路服務到會員資訊，所發表的主題與回覆將會自動連結到社交網站。';
 	$lang->about_part_social_info = '允許該模組的主題與回復可連結到社交網站藉由社交資訊整合功能。';
+	$lang->use_short_url = 'Short URL';
+	$lang->about_use_short_url = 'Send comments or documents with short url.';
 	$lang->bitly_username = 'bit.ly 帳號';
 	$lang->bitly_api_key = 'bit.ly API 密鑰';
 

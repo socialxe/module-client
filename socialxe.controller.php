@@ -70,10 +70,15 @@
 
 			// 데이터를 준비
 			$args->parent_srl = Context::get('comment_srl');
-			$args->content = nl2br(htmlspecialchars(Context::get('content')));
+			$args->content = trim(Context::get('content'));
 			$args->nick_name = $this->providerManager->getMasterProviderNickName();
 			$args->content_link = Context::get('content_link');
 			$args->content_title = Context::get('content_title');
+
+			// 1.5이상이 아니거나 모바일 클래스가 없다면, 줄 바꿈과 특수 문자 변환 실행. - XE Core에서 모바일이면 처리를 해버린다.  1.5 이하에서도 이런 현상이 있는지 몰라서 1.5 이하는 예전처럼 처리
+			if(!Mobile::isFromMobilePhone() || !defined('__XE__')) {
+				$args->content = nl2br(htmlspecialchars($args->content));
+			}
 
 			// 해당 문서가 비밀글인지 확인
 			if ($oDocument->isSecret()) $args->is_secret = 'Y';
@@ -90,12 +95,15 @@
 				$manual_inserted = false;
 				// 부계정이 없으면 알림 설정
 				if (!$this->providerManager->getSlaveProvider())
-					$args->notify_message = "Y";
+					$args->notify_message = 'Y';
 			}else{
 				$manual_inserted = true;
+				$args->email_address = '';
+				$args->homepage = '';
 			}
 
 			$result = $oCommentController->insertComment($args, $manual_inserted);
+
 			if (!$result->toBool()) return $result;
 
 			// 삽입된 댓글의 번호
@@ -348,6 +356,13 @@
 			$member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
 			if (!$member_info) return new Object(-1, 'something wrong');
 
+			// 1.5.0 이상에서 사용자 확인 변수 확인
+			if(defined("__XE__")) {
+				$config = $oMemberModel->getMemberConfig();
+				if ($config->identifier == 'email_address') {
+					$member_info->user_id = $member_info->email_address;
+				}
+			}
 			// 로그인은 기본적으로 자동 로그인으로...
 			$oMemberController = &getController('member');
 			//TODO XE 자동 로그인 버그 때문에 일단 자동 로그인은 해제
@@ -412,11 +427,13 @@
 			}
 			if (!$nick_name_ok) return $this->stop('msg_exists_nick_name');
 
-			// 준비
-			$args->user_id = '_sx.' . $provider . '.' . $id;
+			// 준비 1.5.0 이상에서는 아이디를 지정하지 않음
+			if(!defined("__XE__")) $args->user_id = '_sx.' . $provider . '.' . $id;
 			$args->nick_name = $args->user_name = $nick_name;
 			$args->email_address = $email_address;
-			$args->password = md5(getmicrotime());
+			$text_array = array('\~','\!','\@','\#','\$','\%','\^','\&','\*','\(','\)','\_','\+','\=','\-','\`','\,','\.','\/','\<','\>','\?','\;','\'','\:','\"','\[','\]','\{','\}','\\','\|');
+
+			$args->password = $text_array[rand(0,31)].md5(time()).$text_array[rand(0,31)].md5(getmicrotime());
 			$args->allow_mailing = $allow_mailing;
 			if ($args->allow_mailing != 'Y') $args->allow_mailing = 'N';
 
@@ -425,6 +442,17 @@
 			$output = $oMemberController->insertMember($args);
 			if(!$output->toBool()) return $this->stop($output->getMessage());
 			$member_srl = $output->get('member_srl');
+
+			// 1.5.0 이상에서 아이디 추가 - 꼼수인가;
+			if(defined("__XE__")) {
+				$args->member_srl = $member_srl;
+				$args->user_id = '_sx.' . $provider . '.' . $id;
+				$output2 = executeQuery('socialxe.updateMemberId', $args);
+				if(!$output2->toBool()) {
+					$oMemberController->deleteMember($member_srl);
+					return $output2;
+				}
+			}
 
 			// 소셜 정보 추가
 			$session->access = $this->providerManager->getAccess($provider);
@@ -448,6 +476,13 @@
 				return $output;
 			}
 
+			// 1.5.0 이상에서 사용자 확인 변수 확인
+			if(defined("__XE__")) {
+				$config = $oMemberModel->getMemberConfig();
+				if ($config->identifier == 'email_address') {
+					$args->user_id = $args->email_address;
+				}
+			}
 			// 로그인은 기본적으로 자동 로그인으로...
 			//TODO XE 자동 로그인 버그 때문에 일단 자동 로그인은 해제
 			// http://xe.xpressengine.net/19469260

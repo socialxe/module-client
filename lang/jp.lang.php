@@ -16,6 +16,8 @@
 	$lang->use_social_info = 'ソーシャル情報統合使用';
 	$lang->about_use_social_info = '会員情報にソーシャル情報を統合して、ドキュメントとコメントを自動でソーシャルサービスと連動します。';
 	$lang->about_part_social_info = 'このモジュールのドキュメントとコメントにソーシャル統合機能を使います。';
+	$lang->use_short_url = 'Short URL';
+	$lang->about_use_short_url = 'Send comments or documents with short url.';
 	$lang->bitly_username = 'bit.ly Username';
 	$lang->bitly_api_key = 'bit.ly API Key';
 
