@@ -1,14 +1,17 @@
-<h3 class="xeAdmin">{$lang->socialxe} <span class="gray">{$lang->cmd_management}</span></h3>
-
-<!--@if($module_info)-->
-<div class="header4">
-	<!--@if($module_info->mid)-->
-	<h4 class="xeAdmin">{$module_info->mid} <!--@if($module_info->is_default=='Y')--><span class="bracket">({$lang->is_default})</span><!--@end--> <span class="vr">|</span> <a href="{getSiteUrl($module_info->domain,'','mid',$module_info->mid)}" onclick="window.open(this.href); return false;" class="view">View</a></h4>
-	<!--@end-->
-
-	<ul class="localNavigation">
-		<li <!--@if($act=='dispSocialxeAdminBitly')-->class="on"<!--@end-->><a href="{getUrl('act','dispSocialxeAdminBitly')}">{$lang->cmd_bitly}</a></li>
-		<li <!--@if($act=='dispSocialxeAdminConfig')-->class="on"<!--@end-->><a href="{getUrl('act','dispSocialxeAdminConfig')}">{$lang->cmd_setting}</a></li>
-	</ul>
+<div class="x_page-header">
+	<h1>{$lang->socialxe}</h1>
 </div>
-<!--@end-->
+{@
+	$validator_ids = array(
+		'modules/socialxe/tpl/index/1' => 1,
+	);
+}
+
+<div cond="$XE_VALIDATOR_MESSAGE && isset($validator_ids[$XE_VALIDATOR_ID])" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<ul class="x_nav x_nav-tabs">
+	<li class="x_active"|cond="$act == 'dispSocialxeAdminBitly'"><a href="{getUrl('act', 'dispSocialxeAdminBitly')}">{$lang->cmd_bitly}</a></li>
+	<li class="x_active"|cond="$act == 'dispSocialxeAdminConfig'"><a href="{getUrl('act', 'dispSocialxeAdminConfig')}">{$lang->cmd_setting}</a></li>
+</ul>

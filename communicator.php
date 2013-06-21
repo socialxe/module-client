@@ -379,7 +379,8 @@ class socialxeCommunicator{
 		}
 
 		$headers = array('User-Agent' => "SocialXE ClientBot Ver. {$this->version}");
-		return FileHandler::getRemoteResource($url, $body, 30, $mode, 'application/json', $headers);
+		$output = FileHandler::getRemoteResource($url, $body, 30, $mode, 'application/json', $headers);
+		return $output;
 	}
 
 	// comment_srl이 붙은 주소를 만든다.

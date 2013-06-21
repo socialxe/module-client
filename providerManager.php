@@ -17,14 +17,13 @@ class socialxeProviderManager{
 		$this->session = $sessionManager;
 
 		// 제공하는 서비스
-		$this->provider_list = array('xe', 'twitter', 'me2day', 'facebook', 'yozm');
+		$this->provider_list = array('xe', 'twitter', 'me2day', 'facebook');
 
 		// 각 서비스 클래스
 		$this->provider['xe'] = &socialxeProviderXE::getInstance($this->session);
 		$this->provider['twitter'] = &socialxeProviderTwitter::getInstance($this->session);
 		$this->provider['me2day'] = &socialxeProviderMe2day::getInstance($this->session);
 		$this->provider['facebook'] = &socialxeProviderFacebook::getInstance($this->session);
-		$this->provider['yozm'] = &socialxeProviderYozm::getInstance($this->session);
 	}
 
 	// 환경 설정 값 세팅
