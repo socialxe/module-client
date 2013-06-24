@@ -5,8 +5,8 @@
 		<permission action="dispSocialxeTextyleTool" target="manager" />
 	</permissions>
 	<actions>
-		<action name="dispSocialxeAdminConfig" type="view" standalone="true" />
-		<action name="dispSocialxeAdminBitly" type="view" admin_index="true" standalone="true" />
+		<action name="dispSocialxeAdminConfig" type="view" standalone="true" menu_name="socialxe" />
+		<action name="dispSocialxeAdminBitly" type="view" admin_index="true" standalone="true" menu_name="socialxe" menu_index="true" />
 
 		<action name="procSocialxeAdminInsertConfig" type="controller" standalone="true" />
 		<action name="procSocialxeAdminInsertModuleConfig" type="controller" standalone="true" />
@@ -34,4 +34,9 @@
 		<action name="dispSocialxeLoginAdditional" type="view" standalone="true" />
 		<action name="dispSocialxeSocialInfo" type="view" standalone="true" />
 	</actions>
+	<menus>
+		<menu name="socialxe" type="all">
+			<title xml:lang="ko">SocialXE</title>
+		</menu>
+	</menus>
 </module>
