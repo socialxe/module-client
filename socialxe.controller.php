@@ -358,12 +358,14 @@
 
 			// 1.5.0 이상에서 사용자 확인 변수 확인
 			if(defined("__XE__")) {
+				/*
 				$open_ids = $oMemberModel->getMemberOpenIDByMemberSrl($member_srl);
 				if(!$open_ids || count($open_ids) <1 || array_search($member_info->user_id, $open_ids)) {
 					$args->member_srl = $member_srl;
 					$args->openid = $member_info->user_id;
 					executeQuery('member.addOpenIDToMember', $args);
 				}
+				*/
 				$config = $oMemberModel->getMemberConfig();
 				if ($config->identifier == 'email_address') {
 					$member_info->user_id = $member_info->email_address;
