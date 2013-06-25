@@ -8,8 +8,8 @@
 	<description xml:lang="en">Support SNS function using.(transltated by misol)</description>
 	<description xml:lang="jp">ソーシャル機能使用をサポートします。(translated by SeklutZ)</description>
 	<description xml:lang="zh-TW">提供社交功能。(translated by royallin)</description>
-	<version>1.0.10</version>
-	<date>2013-6-24</date>
+	<version>1.0.11</version>
+	<date>2013-6-25</date>
 	<category>accessory</category>
 	<license link="http://www.opensource.org/licenses/mit-license.php">MIT</license>
 
